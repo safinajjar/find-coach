@@ -16,7 +16,11 @@ export default {
       })
     })
   },
-  loadCoaches(context) {
+  loadCoaches(context, payload) {
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return
+    }
+
     axios({
       method: 'get',
       url: 'https://vue-http-demo-8ad70-default-rtdb.firebaseio.com/coaches.json',
@@ -38,6 +42,7 @@ export default {
         }
 
         context.commit('setCoaches', coaches)
+        context.commit('setFetchTimestamp')
       })
       .catch((error) => {
         const errorMessage = error.message || 'Failed to fetch!'

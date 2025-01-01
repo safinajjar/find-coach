@@ -11,4 +11,13 @@ export default {
   error(state) {
     return state.error
   },
+  shouldUpdate(state) {
+    const lastFetch = state.lastFetch
+    if (!lastFetch) {
+      return true
+    } else {
+      const currentTimeStamp = new Date().getTime()
+      return (currentTimeStamp - lastFetch) / 1000 > 60
+    }
+  },
 }
