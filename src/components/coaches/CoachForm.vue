@@ -46,6 +46,7 @@ export default {
       areas: [],
     }
   },
+  emits: ['save-data'],
   methods: {
     submitForm() {
       const coachData = {
@@ -55,7 +56,7 @@ export default {
         hourlyRate: this.rate,
         areas: this.areas,
       }
-      console.log(coachData)
+      this.$emit('save-data', coachData)
     },
   },
 }
