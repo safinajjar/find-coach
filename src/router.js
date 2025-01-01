@@ -5,6 +5,7 @@ import ContactCoach from './pages/requests/ContactCoach.vue'
 import CoachRegister from './pages/coaches/CoachRegister.vue'
 import RequestsList from './pages/requests/RequestsList.vue'
 import NotFound from './pages/NotFound.vue'
+import UserAuth from './pages/auth/userAuth.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -12,6 +13,10 @@ const router = createRouter({
     {
       path: '/',
       redirect: '/coaches',
+    },
+    {
+      path: '/auth',
+      component: UserAuth,
     },
     {
       name: 'coachesList',
