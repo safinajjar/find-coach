@@ -3,4 +3,10 @@ export default {
     state.coaches.push(payload)
     state.userIsCoach = true
   },
+  setCoaches(state, payload) {
+    state.coaches = payload
+  },
+  setError(state, payload) {
+    state.error = payload
+  },
 }

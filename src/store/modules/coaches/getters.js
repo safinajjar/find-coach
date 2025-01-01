@@ -8,4 +8,7 @@ export default {
   isCoach(state) {
     return state.userIsCoach
   },
+  error(state) {
+    return state.error
+  },
 }
