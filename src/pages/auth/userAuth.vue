@@ -46,6 +46,14 @@ export default {
         return
       }
       // Send data to the server
+      if (this.mode === 'login') {
+        // Log user in
+      } else {
+        this.$store.dispatch('signup', {
+          email: this.email,
+          password: this.password,
+        })
+      }
     },
     switchAuthMode() {
       this.mode = this.mode === 'login' ? 'signup' : 'login'
