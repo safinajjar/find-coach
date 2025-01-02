@@ -73,6 +73,9 @@ export default {
         } else {
           await this.$store.dispatch('signup', actionPayload)
         }
+
+        const redirectUrl = `/${this.$route.query.redirect || 'coachesList'}`
+        this.$router.replace(redirectUrl)
       } catch (error) {
         console.log('error in Auth: ', error)
         this.error = error.message || 'An error occurred.'
