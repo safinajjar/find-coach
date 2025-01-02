@@ -61,15 +61,17 @@ export default {
 
       this.isLoading = true
 
+      const actionPayload = {
+        email: this.email,
+        password: this.password,
+      }
+
       try {
         // Send data to the server
         if (this.mode === 'login') {
-          // Log user in
+          await this.$store.dispatch('login', actionPayload)
         } else {
-          await this.$store.dispatch('signup', {
-            email: this.email,
-            password: this.password,
-          })
+          await this.$store.dispatch('signup', actionPayload)
         }
       } catch (error) {
         console.log('error in Auth: ', error)
