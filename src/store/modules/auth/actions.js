@@ -43,4 +43,11 @@ export default {
       throw new Error(error.message || 'Failed to authenticate. Check your login data.')
     }
   },
+  logout(context) {
+    context.commit('setUser', {
+      token: null,
+      userId: null,
+      tokenExpiration: null,
+    })
+  },
 }
