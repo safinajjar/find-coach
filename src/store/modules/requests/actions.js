@@ -21,28 +21,28 @@ export default {
 
     context.commit('addRequest', newRequest)
   },
-  fetchRequests(context) {
+  async fetchRequests(context) {
     const coachId = context.rootGetters.userId
-    axios
-      .get(`https://vue-http-demo-8ad70-default-rtdb.firebaseio.com/requests/${coachId}.json`)
-      .then((res) => {
-        const requests = []
-        const data = res.data
-        for (const key in data) {
-          const request = {
-            id: key,
-            coachId,
-            userEmail: data[key].userEmail,
-            message: data[key].message,
-          }
-          requests.push(request)
+    try {
+      const res = await axios.get(
+        `https://vue-http-demo-8ad70-default-rtdb.firebaseio.com/requests/${coachId}.json`,
+      )
+      const requests = []
+      const data = res.data
+      for (const key in data) {
+        const request = {
+          id: key,
+          coachId,
+          userEmail: data[key].userEmail,
+          message: data[key].message,
         }
-        context.commit('setRequests', requests)
-      })
-      .catch((error) => {
-        const errorMessage = error.message || 'Failed to fetch!'
-        context.dispatch('setError', errorMessage)
-      })
+        requests.push(request)
+      }
+      context.commit('setRequests', requests)
+    } catch (error) {
+      const errorMessage = error.message || 'Failed to fetch!'
+      context.dispatch('setError', errorMessage)
+    }
   },
   setError(context, payload) {
     context.commit('setError', payload)

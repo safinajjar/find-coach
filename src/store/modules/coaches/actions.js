@@ -16,38 +16,37 @@ export default {
       })
     })
   },
-  loadCoaches(context, payload) {
+  async loadCoaches(context, payload) {
     if (!payload.forceRefresh && !context.getters.shouldUpdate) {
       return
     }
 
-    axios({
-      method: 'get',
-      url: 'https://vue-http-demo-8ad70-default-rtdb.firebaseio.com/coaches.json',
-    })
-      .then((response) => {
-        const coaches = []
+    try {
+      const response = await axios({
+        method: 'get',
+        url: 'https://vue-http-demo-8ad70-default-rtdb.firebaseio.com/coaches.json',
+      })
+      const coaches = []
 
-        for (const key in response.data) {
-          const coach = {
-            id: key,
-            firstName: response.data[key].firstName,
-            lastName: response.data[key].lastName,
-            areas: response.data[key].areas,
-            hourlyRate: response.data[key].hourlyRate,
-            description: response.data[key].description,
-          }
-
-          coaches.push(coach)
+      for (const key in response.data) {
+        const coach = {
+          id: key,
+          firstName: response.data[key].firstName,
+          lastName: response.data[key].lastName,
+          areas: response.data[key].areas,
+          hourlyRate: response.data[key].hourlyRate,
+          description: response.data[key].description,
         }
 
-        context.commit('setCoaches', coaches)
-        context.commit('setFetchTimestamp')
-      })
-      .catch((error) => {
-        const errorMessage = error.message || 'Failed to fetch!'
-        context.dispatch('setError', errorMessage)
-      })
+        coaches.push(coach)
+      }
+
+      context.commit('setCoaches', coaches)
+      context.commit('setFetchTimestamp')
+    } catch (error) {
+      const errorMessage = error.message || 'Failed to fetch!'
+      context.dispatch('setError', errorMessage)
+    }
   },
   setError(context, payload) {
     context.commit('setError', payload)
