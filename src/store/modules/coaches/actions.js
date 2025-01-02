@@ -1,19 +1,20 @@
 import axios from 'axios'
 
 export default {
-  registerCoach(context, data) {
+  async registerCoach(context, data) {
     const coachId = context.rootGetters.userId
     const coachData = data
 
-    axios({
+    const token = context.rootGetters.token
+
+    await axios({
       method: 'put',
-      url: `https://vue-http-demo-8ad70-default-rtdb.firebaseio.com/coaches/${coachId}.json`,
+      url: `https://vue-http-demo-8ad70-default-rtdb.firebaseio.com/coaches/${coachId}.json?auth=${token}`,
       data: coachData,
-    }).then(() => {
-      context.commit('registerCoach', {
-        ...coachData,
-        id: coachId,
-      })
+    })
+    context.commit('registerCoach', {
+      ...coachData,
+      id: coachId,
     })
   },
   async loadCoaches(context, payload) {
